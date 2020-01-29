@@ -1,0 +1,121 @@
+#!/usr/bin/python3
+#Server
+import socket
+server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+ip = socket.gethostbyname(socket.gethostname())
+port = 1234
+address=(ip,port)
+server.bind(address)
+server.listen(5)
+print("[+] Started listening on",ip,":",port)
+client,addr = server.accept()
+print("[*] Got a connection from ",addr[0],":",addr[1])
+class _data_:
+    def send(self):
+        client.send(bytes(self,"utf-8"))
+while True:
+    data = client.recv(1024)
+    print("[+] From the client: "+str(data))
+    print("Processing data")
+    if str(data) == "b'hello server'" or str(data) == "b'Hello server'":
+        _data_.send("hello client!")
+        #client.send(bytes("Hello client!\n","utf-8"))
+        print("processing done.\n Response sent.")
+    elif data == "close":
+        client.send(bytes("Goodbye!\n","utf-8")); server.close()
+    else:
+        client.send(bytes("Invalid data","utf-8"))
+        print("Response sent: invalid data.")
+#___ END ___
+ 
+#!/usr/bin/python3
+#Client
+import socket
+name = socket.gethostname()
+name = socket.gethostbyname(name)
+client = socket.socket()
+def conn():
+    i=input("Connect('y'|'n')?\nadmin@windowsbox~:$ "); return i
+def sendAndRecv(n,c):
+    print("Attempting to connect")
+    client.connect((n,1234))
+    print("Connected to the server.\nTo exit just press ctrl+C")
+    while True:
+        try:
+            content=input("admin@windows(box~:$ ")
+            client.send(bytes(content,"utf-8"))
+            i=client.recv(1024)
+            print(str(i))
+            if content == "close":
+                client.close()
+        except KeyboardInterrupt:
+            print("Ok, closing connection...")
+            print("Exiting, see you another time!")
+            client.close(); exit()
+if conn() == "y":
+    print("connecting...")
+    sendAndRecv(name,client)
+else:
+    print("Ok, bye then.")
+    exit()
+#___ END ___
+ 
+#!/usr/bin/python
+#Server
+import socket
+name = socket.gethostname()
+name = socket.gethostbyname(name)
+client = socket.socket()
+def conn():
+    i=raw_input("Connect('y'|'n')?\nadmin@windowsbox~:$ "); return i
+def sendAndRecv(n,c):
+    print "Attempting to connect"
+    client.connect((n,1234))
+    print "Connected to the server.\nTo exit just press ctrl+C"
+    while True:
+        try:
+            content=raw_input("admin@windowsbox~:$ ")
+            client.send("%s"%(content))
+            i=client.recv(1024)
+            print i
+        except KeyboardInterrupt:
+            print "Ok, closing connection..."
+            print "Exiting, see you another time!"
+            client.close(); exit()
+if conn() == "y":
+    print "connecting..."
+    sendAndRecv(name,client)
+else:
+    print "Ok, bye then."
+    exit()
+#___ END ____
+ 
+#!/usr/bin/python
+#Client
+import socket
+name = socket.gethostname()
+name = socket.gethostbyname(name)
+client = socket.socket()
+def conn():
+    i=raw_input("Connect('y'|'n')?\nadmin@windowsbox~:$ "); return i
+def sendAndRecv(n,c):
+    print "Attempting to connect"
+    client.connect((n,1234))
+    print "Connected to the server.\nTo exit just press ctrl+C"
+    while True:
+        try:
+            content=raw_input("admin@windowsbox~:$ ")
+            client.send("%s"%(content))
+            i=client.recv(1024)
+            print i
+        except KeyboardInterrupt:
+            print "Ok, closeing connection..."
+            print "Exiting, see you another time!"
+            client.close(); exit()
+if conn() == "y":
+    print "connecting..."
+    sendAndRecv(name,client)
+else:
+    print "Ok, bye then."
+    exit()
+#____ END ____
